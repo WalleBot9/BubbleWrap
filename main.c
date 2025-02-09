@@ -1,9 +1,21 @@
+// Windows includes
 #ifdef _WIN32
 #define _CRT_SECURE_NO_WARNINGS
 #define WIN32_LEAN_AND_MEAN
 #include <Windows.h>
 #define getch() _getch()
 #endif
+
+// POSIX includes
+#ifndef _WIN32
+#define BUFSIZ 512
+#define max(a,b) (((a) > (b)) ? (a) : (b))
+#define min(a,b) (((a) < (b)) ? (a) : (b))
+#define getch() getchar()
+#define scanf_s scanf
+#include <unistd.h>
+#endif
+
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -93,7 +105,7 @@ int main(void)
 	// Generate bubble wrap
 	// Output (2000 is Message Limit)
 	char outputStr[MESSAGELIMIT] = {'\0'};
-	
+
 
 	// Iterate through until we're out of chars
 	{
@@ -125,7 +137,7 @@ int main(void)
 		}
 
 	}
-	
+
 	// Print out the finalized message
 	printf("Final message:\n\n%s\n", outputStr);
 
@@ -207,8 +219,8 @@ static void prompts(char* output, const char* format, ...)
 	va_end(arg_list);
 
 	// Get input from user
-	scanf(" %[^\n]s", output);
-	
+	scanf_s(" %[^\n]s", output);
+
 
 
 	// Output newline
